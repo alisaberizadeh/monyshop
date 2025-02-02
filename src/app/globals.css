@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ 
+*:not(svg):not(svg *) {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark{
+  background-color: #181521;
+}
+body {
+  background-color: rgb(247, 247, 247);
+ }
+ .swiper-button-next,
+ .swiper-button-prev {
+     color: white !important;
+  }
+ 
