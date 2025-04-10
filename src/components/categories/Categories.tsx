@@ -1,38 +1,68 @@
+"use client";
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Skeleton } from '../ui/skeleton';
+import { ICat } from '@/lib/types';
+
+
 
 function Categories() {
-  return (
-    <div className='w-full  grid grid-cols-6 gap-7 mt-7 mb-10'>
+    const [cats, setCats] = useState<ICat[]>([]);
+    const [loader, setLoader] = useState<boolean>(true);
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300' >Wristwatch</p>
-        </Link>
+    useEffect(() => {
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300' >Necklace</p>
-        </Link>
+        const getCategories = async () => {
+            try {
+                const res = await fetch('http://127.0.0.1:8000/categories');
+                const data = await res.json();
+                setCats(data)
+                setLoader(false)
+            } catch (err) {
+                console.error('Error:', err);
+            }
+        };
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300' >Earrings</p>
-        </Link>
+        setTimeout(getCategories, 1000)
+    }, []);
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300'  >Bracelet</p>
-        </Link>
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300' >Glasses</p>
-        </Link>
+    return (
+        <div className='w-full  grid grid-cols-6 gap-7 mt-7 mb-10'>
+            {cats.map((item: ICat, index: number) => {
+                return (
+                    <Link
+                        href=""
+                        key={index}
+                        className="col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm"
+                    >
+                        <p className="font-extralight lg:text-xl text-lg tracking-widest dark:text-gray-300">
+                            {item.name}
+                        </p>
+                    </Link>
+                );
+            })}
 
-        <Link href="" className='col-span-3 md:col-span-2 lg:col-span-1 bg-white dark:bg-bgDark2 flex justify-center items-center p-5 rounded-xl shadow-sm'>
-            <p className='font-extralight lg:text-xl text-lg  tracking-widest dark:text-gray-300' >Hat</p>
-        </Link>
+            {loader &&
+                Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="col-span-1 flex flex-col space-y-3">
+                        <Skeleton className="h-[68px] w-full rounded-2xl" />
+                    </div>
+                ))}
 
- 
+        </div>
 
-    </div>
-  )
+
+
+    )
 }
 
 export default Categories
+
+
+
+
+
+
+
+
