@@ -1,26 +1,38 @@
 "use client";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as ci from "react-icons/ci";
 import { FaAngleDown } from "react-icons/fa6";
 import { FaAngleUp } from "react-icons/fa6";
 import Container from "../container/Container";
 import { ThemeContext } from "@/context/ThemeContext";
 import { FavoritesContext } from "@/context/FavoritesContext";
+import { ICat } from "@/lib/types";
 
 function Navbar() {
     const [openCategories, setOpenCategories] = useState<boolean>(false);
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const [bgMenu, setBgMenu ]= useState<boolean>(false)
+    const [bgMenu, setBgMenu] = useState<boolean>(false)
     const [mneu, setMneu] = useState<boolean>(false)
     const { favorites } = useContext(FavoritesContext);
-    
-    
+    const [cats, setCats] = useState<ICat[]>([]);
+
+    useEffect(() => {
+        const getCats = async () => {
+            const res = await fetch('http://127.0.0.1:8000/categories');
+            const data = await res.json();
+            setCats(data);
+        };
+
+        getCats();
+    }, []);
+
+
     const openMenu = () => {
         setBgMenu(true)
         setTimeout(() => {
             setMneu(true)
-        },100);
+        }, 100);
     }
 
     const closeMenu = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -31,7 +43,7 @@ function Navbar() {
             }, 100);
         }
     };
-    
+
     return (
         <>
             <div className="w-full  bg-white dark:bg-bgDark">
@@ -73,7 +85,7 @@ function Navbar() {
                             href=""
                             className="text-2xl relative text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
                         >
-                              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -left-1 dark:border-gray-900">{favorites.length}</div>
+                            <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -left-1 dark:border-gray-900">{favorites.length}</div>
 
                             <ci.CiHeart />
                         </Link>
@@ -119,10 +131,12 @@ function Navbar() {
                         <div className="flex items-center">Categories {openCategories ? <FaAngleUp className="ml-1" /> : <FaAngleDown className="ml-1" />}</div>
                         {openCategories && (
                             <div className="lg:absolute top-full left-0 bg-white lg:mt-0 mt-4 dark:bg-bgDark dark:border dark:border-myBorderDark w-full lg:shadow-xl">
-                                <Link href="" className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >test</Link>
-                                <Link href="" className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >test</Link>
-                                <Link href="" className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >test</Link>
-                                <Link href="" className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >test</Link>
+                                {cats.map((item: ICat, index: number) => {
+                                    return (
+                                        <Link href="" key={index} className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >{item.name}</Link>
+
+                                    );
+                                })}
                             </div>
                         )}
                     </button>

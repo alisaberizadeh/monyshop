@@ -1,6 +1,7 @@
 "use client"
 import React, { createContext, ReactNode, useState } from 'react';
 import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 type TFavoriteContext = {
@@ -26,11 +27,13 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       favoritesArray.push(id);
       localStorage.setItem('myFavorites', JSON.stringify(favoritesArray));
       setFavorites(favoritesArray);
-      Swal.fire({
-        title: 'Added to your favorites!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      })
+      // Swal.fire({
+      //   title: 'Added to your favorites!',
+      //   icon: 'success',
+      //   confirmButtonText: 'OK'
+      // })
+      toast.success('Added to your favorites!')
+
     }
     else if (favorites.includes(id)) {
       Swal.fire({
@@ -44,12 +47,8 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
           const updatedFavorites = favoritesArray.filter(favId => favId !== id);
           localStorage.setItem('myFavorites', JSON.stringify(updatedFavorites));
           setFavorites(updatedFavorites);
-          Swal.fire({
-            title: "Deleted!",
-            icon: "success",
-            confirmButtonText: 'OK'
+          toast.success('Removed from your favorites!')
 
-          });
         }
       });
     }

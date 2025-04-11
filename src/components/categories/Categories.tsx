@@ -7,8 +7,8 @@ import { ICat } from '@/lib/types';
 
 
 function Categories() {
-    const [cats, setCats] = useState<ICat[]>([]);
     const [loader, setLoader] = useState<boolean>(true);
+    const [cats, setCats] = useState<ICat[]>([]);
 
     useEffect(() => {
 
