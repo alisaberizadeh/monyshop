@@ -18,8 +18,8 @@ export interface IProduct {
 }
 export interface IPropsProduct {
   id: number
-    name: string
-    image: string
-    price: number
-    category: number
-  }
+  name: string
+  image: string
+  price: number
+  category: number
+}

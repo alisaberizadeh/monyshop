@@ -22,8 +22,8 @@ function LatestProducts() {
         console.error('Error:', err);
       }
     };
+    getProducts()
 
-    setTimeout(getProducts, 1500);
   }, []);
 
   return (
@@ -58,32 +58,5 @@ function LatestProducts() {
     </div>
   );
 }
-
-// function ProductWithCategory({ product }: { product: IProduct }) {
-//   const [categoryName, setCategoryName] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const getCategoryName = async () => {
-//       try {
-//         const res = await fetch(`http://127.0.0.1:8000/categories/${product.category_id}`);
-//         const data = await res.json();
-//         setCategoryName(data.name);
-//       } catch (err) {
-//         console.error('خطا:', err);
-//       }
-//     };
-
-//     getCategoryName();
-//   }, [product.category_id]);
-
-//   return (
-//     <Product
-//       name={product.name}
-//       image={product.image}
-//       price={product.price}
-//       category={categoryName || "در حال بارگذاری..."}
-//     />
-//   );
-// }
 
 export default LatestProducts;

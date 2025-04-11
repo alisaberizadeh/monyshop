@@ -23,7 +23,7 @@ function Categories() {
             }
         };
 
-        setTimeout(getCategories, 1000)
+        getCategories()
     }, []);
 
 

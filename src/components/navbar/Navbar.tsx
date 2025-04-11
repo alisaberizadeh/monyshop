@@ -6,12 +6,15 @@ import { FaAngleDown } from "react-icons/fa6";
 import { FaAngleUp } from "react-icons/fa6";
 import Container from "../container/Container";
 import { ThemeContext } from "@/context/ThemeContext";
+import { FavoritesContext } from "@/context/FavoritesContext";
 
 function Navbar() {
     const [openCategories, setOpenCategories] = useState<boolean>(false);
     const { theme, toggleTheme } = useContext(ThemeContext)
     const [bgMenu, setBgMenu ]= useState<boolean>(false)
     const [mneu, setMneu] = useState<boolean>(false)
+    const { favorites } = useContext(FavoritesContext);
+    
     
     const openMenu = () => {
         setBgMenu(true)
@@ -68,8 +71,10 @@ function Navbar() {
                         </Link>
                         <Link
                             href=""
-                            className="text-2xl text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
+                            className="text-2xl relative text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
                         >
+                              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -left-1 dark:border-gray-900">{favorites.length}</div>
+
                             <ci.CiHeart />
                         </Link>
                         <button
