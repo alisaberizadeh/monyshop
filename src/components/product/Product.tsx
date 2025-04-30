@@ -5,24 +5,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 
-function Product({ id, name, category, price, image }: IPropsProduct) {
-    const [categoryName, setCategoryName] = useState<string | null>(null);
+function Product({ id, name, category, price, image, quantity }: IPropsProduct) {
+    // const [categoryName, setCategoryName] = useState<string | null>(null);
     const { favorites, handleFavorites } = useContext(FavoritesContext);
     const isFavorite = favorites.includes(id);
 
-    useEffect(() => {
-        const getCategoryName = async () => {
-            try {
-                const res = await fetch(`http://127.0.0.1:8000/categories/${category}`);
-                const data = await res.json();
-                setCategoryName(data.name);
-            } catch (err) {
-                console.error('Error :', err);
-            }
-        };
+    // useEffect(() => {
+    //     const getCategoryName = async () => {
+    //         try {
+    //             const res = await fetch(`http://alisab.ir/categories/${category}`);
+    //             const data = await res.json();
+    //             setCategoryName(data.name);
+    //         } catch (err) {
+    //             console.error('Error :', err);
+    //         }
+    //     };
 
-        getCategoryName();
-    }, [category]);
+    //     getCategoryName();
+    // }, [category]);
 
 
     const handleFavorite = (id: number) => {
@@ -31,7 +31,7 @@ function Product({ id, name, category, price, image }: IPropsProduct) {
 
     return (
         <div className="col-span-1 bg-white dark:bg-bgDark2 p-4 rounded-sm shadow-sm">
-            <Link href="" className="w-full relative group">
+            <Link href={`shop/${id}`} className="w-full relative group">
                 <img
                     src={image}
                     alt={name}
@@ -40,17 +40,21 @@ function Product({ id, name, category, price, image }: IPropsProduct) {
             </Link>
 
             <p className="font-black text-sm mt-4 flex items-center justify-between">
-                <Link href="" className="dark:text-white">{name} </Link>
+                <Link href={`shop/${id}`} className="dark:text-white">{name} </Link>
                 <span className="text-md cursor-pointer" onClick={() => handleFavorite(id)}>
                     {isFavorite ? (
-                        <FaHeart className="text-red-600 text-xl"  />
+                        <FaHeart className="text-red-600 text-xl" />
                     ) : (
                         <FaRegHeart className="text-gray-500  text-xl" />
                     )}
                 </span>
             </p>
 
-            <Link href="" className="font-thin text-gray-700 dark:text-myTextDark text-sm mt-1">
+            <p className="font-thin text-gray-700 dark:text-myTextDark text-sm mt-1">
+                Quantity :  <span className="font-black">{quantity}</span>
+            </p>
+
+            {/* <Link href="" className="font-thin text-gray-700 dark:text-myTextDark text-sm mt-1">
                 {categoryName || <div role="status">
                     <svg aria-hidden="true" className="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-violet-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -58,9 +62,9 @@ function Product({ id, name, category, price, image }: IPropsProduct) {
                     </svg>
                     <span className="sr-only">Loading...</span>
                 </div>}
-            </Link>
+            </Link> */}
             <p className="text-sm mt-2 flex items-center">
-                <span className="font-black text-red-700 dark:text-orange-500"> ${price}</span>
+                <span className="font-black text-green-600 dark:text-orange-500"> ${price}</span>
             </p>
         </div>
     );

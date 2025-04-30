@@ -1,25 +1,28 @@
 "use client"
-import React, { createContext, ReactNode, useState } from 'react';
-import Swal from 'sweetalert2'
-import { ToastContainer, toast } from 'react-toastify';
-
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 type TFavoriteContext = {
   favorites: number[];
   handleFavorites: (id: number) => void;
-}
+};
 
 export const FavoritesContext = createContext({} as TFavoriteContext);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
+  const [favorites, setFavorites] = useState<number[]>([]);
 
-  const [favorites, setFavorites] = useState(() => {
-    const myFavorites = localStorage.getItem('myFavorites');
-    return myFavorites ? JSON.parse(myFavorites) : [];
-  });
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('myFavorites');
+      if (stored) {
+        setFavorites(JSON.parse(stored));
+      }
+    }
+  }, []);
 
   const handleFavorites = (id: number) => {
-
     const stored = localStorage.getItem('myFavorites');
     const favoritesArray: number[] = stored ? JSON.parse(stored) : [];
 
@@ -27,15 +30,8 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       favoritesArray.push(id);
       localStorage.setItem('myFavorites', JSON.stringify(favoritesArray));
       setFavorites(favoritesArray);
-      // Swal.fire({
-      //   title: 'Added to your favorites!',
-      //   icon: 'success',
-      //   confirmButtonText: 'OK'
-      // })
-      toast.success('Added to your favorites!')
-
-    }
-    else if (favorites.includes(id)) {
+      toast.success('Added to your favorites!');
+    } else {
       Swal.fire({
         title: "Remove from your favorites?",
         icon: "warning",
@@ -47,14 +43,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
           const updatedFavorites = favoritesArray.filter(favId => favId !== id);
           localStorage.setItem('myFavorites', JSON.stringify(updatedFavorites));
           setFavorites(updatedFavorites);
-          toast.success('Removed from your favorites!')
-
+          toast.success('Removed from your favorites!');
         }
       });
     }
-
-
-  }
+  };
 
   return (
     <FavoritesContext.Provider value={{ favorites, handleFavorites }}>
@@ -62,4 +55,3 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     </FavoritesContext.Provider>
   );
 };
-

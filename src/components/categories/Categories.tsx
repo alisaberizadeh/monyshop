@@ -14,7 +14,7 @@ function Categories() {
 
         const getCategories = async () => {
             try {
-                const res = await fetch('http://127.0.0.1:8000/categories');
+                const res = await fetch('http://alisab.ir/categories');
                 const data = await res.json();
                 setCats(data)
                 setLoader(false)

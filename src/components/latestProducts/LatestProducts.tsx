@@ -13,7 +13,7 @@ function LatestProducts() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/products");
+        const res = await fetch("http://alisab.ir/products");
         const data = await res.json();
         setProducts(data.slice(0, 10));
         setLoader(false);
@@ -34,7 +34,7 @@ function LatestProducts() {
 
       <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10'>
         {products.map((item: IProduct, index: number) => (
-           <Product key={index} name={item.name} image={item.image} price={item.price} category={item.category_id} id={item.id} />
+           <Product key={index} name={item.name} image={item.image} price={item.price} category={item.category_id} id={item.id} quantity={item.quantity} />
         ))}
         {loader &&
           Array.from({ length: 10 }).map((_, i) => (
@@ -51,7 +51,7 @@ function LatestProducts() {
       </div>
 
       <div className='text-center my-10'>
-        <Link href="" className="text-white bg-gradient-to-br from-violet-600 to-violet-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm lg:text-lg px-10 py-2.5 text-center inline-flex items-center">
+        <Link href="" className=" text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 inline-flex items-center">
           More Products <fa.FaCirclePlus className='ml-2' />
         </Link>
       </div>

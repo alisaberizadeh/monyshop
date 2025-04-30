@@ -22,4 +22,11 @@ export interface IPropsProduct {
   image: string
   price: number
   category: number
+  quantity: number
+}
+export interface ICategury {
+  id: number
+  name: string
+  created_at: string
+  updated_at: string
 }

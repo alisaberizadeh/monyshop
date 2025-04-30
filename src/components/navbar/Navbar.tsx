@@ -19,7 +19,7 @@ function Navbar() {
 
     useEffect(() => {
         const getCats = async () => {
-            const res = await fetch('http://127.0.0.1:8000/categories');
+            const res = await fetch('http://alisab.ir/categories');
             const data = await res.json();
             setCats(data);
         };
@@ -113,13 +113,13 @@ function Navbar() {
                         <ci.CiShop className="mr-1" /> Mony Shop
                     </Link>
                     <Link
-                        href=""
+                        href="/"
                         className="  text-myText dark:text-myTextDark hover:text-violet-600 px-6 py-3 lg:p-4  transition-all ease-in-out dark:hover:text-white tracking-widest lg:mx-5 block"
                     >
                         Home
                     </Link>
                     <Link
-                        href=""
+                        href="/shop"
                         className="text-myText dark:text-myTextDark hover:text-violet-600  px-6 py-3 lg:p-4  transition-all ease-in-out dark:hover:text-white tracking-widest lg:mx-5 block"
                     >
                         Shop
