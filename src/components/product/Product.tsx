@@ -31,7 +31,7 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
 
     return (
         <div className="col-span-1 bg-white dark:bg-bgDark2 p-4 rounded-sm shadow-sm">
-            <Link href={`shop/${id}`} className="w-full relative group">
+            <Link href={`/shop/${id}`} className="w-full relative group">
                 <img
                     src={image}
                     alt={name}
@@ -40,7 +40,7 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
             </Link>
 
             <p className="font-black text-sm mt-4 flex items-center justify-between">
-                <Link href={`shop/${id}`} className="dark:text-white">{name} </Link>
+                <Link href={`/shop/${id}`} className="dark:text-white">{name} </Link>
                 <span className="text-md cursor-pointer" onClick={() => handleFavorite(id)}>
                     {isFavorite ? (
                         <FaHeart className="text-red-600 text-xl" />
@@ -64,7 +64,7 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
                 </div>}
             </Link> */}
             <p className="text-sm mt-2 flex items-center">
-                <span className="font-black text-green-600 dark:text-orange-500"> ${price}</span>
+                <span className="font-black text-orange-600 dark:text-orange-500"> ${price}</span>
             </p>
         </div>
     );

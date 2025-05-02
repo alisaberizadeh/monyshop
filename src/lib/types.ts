@@ -30,3 +30,27 @@ export interface ICategury {
   created_at: string
   updated_at: string
 }
+
+export interface IComment {
+  id: number
+  user_id: number
+  product_id: number
+  comment: string
+  created_at: string
+  updated_at: string
+  user: User
+}
+
+export interface User {
+  id: number
+  name: string
+  email: string
+  is_admin: number
+  credit: number
+  phone: string
+  city: string
+  address: string
+  remember_token: string
+  created_at: string
+  updated_at: string
+}
