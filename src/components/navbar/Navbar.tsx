@@ -133,7 +133,7 @@ function Navbar() {
                             <div className="lg:absolute top-full left-0 bg-white lg:mt-0 mt-4 dark:bg-bgDark dark:border dark:border-myBorderDark w-full lg:shadow-xl">
                                 {cats.map((item: ICat, index: number) => {
                                     return (
-                                        <Link href="" key={index} className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >{item.name}</Link>
+                                        <Link  href={{ pathname: '/shop', query: { category: item.id } }}  key={index} className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >{item.name}</Link>
 
                                     );
                                 })}
