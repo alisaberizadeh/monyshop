@@ -54,3 +54,14 @@ export interface User {
   created_at: string
   updated_at: string
 }
+export interface IUser {
+  name: string;
+  email: string;
+  credit: number;
+  phone: string | null;
+  city: string | null;
+  address: string | null;
+  created_at: string;
+  updated_at: string;
+  id: number;
+}

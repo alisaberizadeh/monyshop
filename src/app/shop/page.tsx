@@ -21,24 +21,20 @@ function Shop() {
   const [maxPrice, setMaxPrice] = useState<number>(0)
   const [selectedMin, setSelectedMin] = useState<number>(minPrice);
   const [selectedMax, setSelectedMax] = useState<number>(maxPrice);
-  const [productsFilter, setProductsFilter] = useState<IProduct[]>([]);
+  const [initialProducts, setInitialProducts] = useState<IProduct[]>([]);
 
-  const apply = async () => {
-    const filteredProducts = products.filter((item: IProduct) => 
-      item.price >= selectedMin && item.price <= selectedMax
-    );
-    setProducts(filteredProducts); 
-  }
 
   const getData = async () => {
     try {
       const res = await axios.get("http://alisab.ir/products");
       setProducts(res.data);
+      setInitialProducts(res.data);
       setLoader(false);
     } catch (err) {
       console.error('Error:', err);
     }
   }
+
   const getCats = async () => {
     try {
       const cat_res = await axios.get('http://alisab.ir/categories');
@@ -51,6 +47,7 @@ function Shop() {
     try {
       const cat_products = await axios.get(`http://alisab.ir/products/category/${id}`);
       setProducts(cat_products.data);
+      setInitialProducts(cat_products.data);
       setLoader(false);
     } catch (error) {
       console.error('Error :', error);
@@ -70,9 +67,18 @@ function Shop() {
     handleData()
   }, [category_id]);
 
+
+  const apply = () => {
+    const filtered = initialProducts.filter(item => 
+      item.price >= selectedMin && item.price <= selectedMax
+    );
+    setProducts(filtered);
+  }
+
+ 
   useEffect(() => {
-    if (products.length > 0) {
-      const prices = products.map(item => item.price);
+    if (initialProducts.length > 0) {
+      const prices = initialProducts.map(item => item.price);
       const min = Math.min(...prices);
       const max = Math.max(...prices);
       setMinPrice(min);
@@ -80,7 +86,7 @@ function Shop() {
       setSelectedMin(min);
       setSelectedMax(max);
     }
-  }, [products]);
+  }, [initialProducts]);
 
 
 

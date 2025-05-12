@@ -1,27 +1,37 @@
 "use client"
 import { ThemeProvider } from '@/context/ThemeContext'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../navbar/Navbar'
 import Footer from '../footer/Footer'
 import { FavoritesProvider } from '@/context/FavoritesContext'
 import { ToastContainer, toast } from 'react-toastify';
+import { usePathname } from 'next/navigation'
+import { AuthProvider } from '@/context/AuthContext'
+import axios from 'axios'
 
 
 function MainLayout(props: { children: React.ReactNode }) {
-    return (
-        <ThemeProvider>
+  useEffect(() => {
+    axios.get("http://alisab.ir/sanctum/csrf-cookie", {
+      withCredentials: true,
+    });
+  }, []);
+  return (
+    <ThemeProvider>
 
-            <FavoritesProvider>
-            <ToastContainer position="bottom-left" autoClose={2000} />
+      <AuthProvider>
+        <FavoritesProvider>
+          <ToastContainer position="bottom-left" autoClose={2000} />
 
-                <Navbar />
+          <Navbar />
 
-                {props.children}
-                <Footer />
-            </FavoritesProvider>
+          {props.children}
+          <Footer />
+        </FavoritesProvider>
+      </AuthProvider>
 
-        </ThemeProvider>
-    )
+    </ThemeProvider>
+  )
 }
 
 export default MainLayout

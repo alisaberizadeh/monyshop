@@ -2,12 +2,13 @@
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import * as ci from "react-icons/ci";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaPowerOff } from "react-icons/fa6";
 import { FaAngleUp } from "react-icons/fa6";
 import Container from "../container/Container";
 import { ThemeContext } from "@/context/ThemeContext";
 import { FavoritesContext } from "@/context/FavoritesContext";
 import { ICat } from "@/lib/types";
+import { AuthContext } from "@/context/AuthContext";
 
 function Navbar() {
     const [openCategories, setOpenCategories] = useState<boolean>(false);
@@ -16,6 +17,8 @@ function Navbar() {
     const [mneu, setMneu] = useState<boolean>(false)
     const { favorites } = useContext(FavoritesContext);
     const [cats, setCats] = useState<ICat[]>([]);
+    const { user , logout } = useContext(AuthContext)
+    const [userSubmenu, setUserSubmenu] = useState<boolean>(false)
 
     useEffect(() => {
         const getCats = async () => {
@@ -69,12 +72,7 @@ function Navbar() {
                         </div>
                     </div>
                     <div className="col-span-4 lg:col-span-1 flex  justify-center lg:justify-normal" dir="rtl">
-                        <Link
-                            href=""
-                            className="text-2xl text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200 "
-                        >
-                            <ci.CiUser />
-                        </Link>
+                        
                         <Link
                             href=""
                             className="text-2xl text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
@@ -89,12 +87,37 @@ function Navbar() {
 
                             <ci.CiHeart />
                         </Link>
+                        
                         <button
                             onClick={toggleTheme}
                             className="text-2xl text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
                         >
                             {theme === "light" ? <ci.CiDark /> : <ci.CiLight />}
                         </button>
+                        {user ? (<button
+                        onClick={()=>{setUserSubmenu(!userSubmenu)}}
+                            className={`text-2xl relative text-myText dark:text-myTextDark ${userSubmenu ? "bg-violet-600 text-white" : ""} bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200 `}
+                        >
+                            {user && (
+                                <div className="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -top-0.5 -left-0.5 dark:border-gray-900"></div>
+
+                            )}
+
+                            <ci.CiUser />
+
+                            <div className={`bg-white dark:bg-bgDark2 dark:border-myBorderDark border  shadow-xl absolute left-0 -bottom-24 z-[100] rounded-lg text-left text-lg  min-w-52 ${userSubmenu ? "block" : "hidden"}`}>
+                                <p className="text-gray-400 border-b dark:border-b-myBorderDark w-full block pl-5 py-2">{user?.name}</p>
+                                <p onClick={logout} className="text-red-600  w-full   pl-5 py-2 flex items-center justify-end">Logout <FaPowerOff className="mr-1" /> </p>
+                            </div>
+                        </button>) : 
+                        (
+                            <Link
+                            href="/auth/login"
+                            className="text-2xl text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
+                        >
+                            <ci.CiUser />
+                        </Link>
+                        )}
                         <button onClick={openMenu}
                             className="text-2xl lg:hidden text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-hoverBgLight dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out"
                         >
@@ -133,7 +156,7 @@ function Navbar() {
                             <div className="lg:absolute top-full left-0 bg-white lg:mt-0 mt-4 dark:bg-bgDark dark:border dark:border-myBorderDark w-full lg:shadow-xl">
                                 {cats.map((item: ICat, index: number) => {
                                     return (
-                                        <Link  href={{ pathname: '/shop', query: { category: item.id } }}  key={index} className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >{item.name}</Link>
+                                        <Link href={{ pathname: '/shop', query: { category: item.id } }} key={index} className="block py-2 border-b border-myBorder dark:border-myBorderDark pl-5 text-left w-full text-myText dark:text-myTextDark hover:text-violet-600 dark:hover:text-white" >{item.name}</Link>
 
                                     );
                                 })}
