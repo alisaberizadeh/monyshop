@@ -31,7 +31,7 @@ function Page() {
     };
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section className="  dark:bg-gray-900">
             <div className="flex flex-col items-center   px-6 py-8 mx-auto md:h-screen lg:py-0 md:mt-10">
 
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -136,22 +136,7 @@ function Page() {
                             </div>
 
 
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-start">
-                                    <div className="flex items-center h-5">
-                                        <input
-                                            id="remember"
-                                            type="checkbox"
-                                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                        />
-                                    </div>
-                                    <div className="ml-3 text-sm">
-                                        <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">
-                                            Remember me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                          
 
 
                             <button
