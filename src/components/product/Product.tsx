@@ -3,13 +3,14 @@ import { FavoritesContext } from "@/context/FavoritesContext";
 import { IPropsProduct } from "@/lib/types";
 import Link from "next/link";
 import React, { useContext } from "react";
-import { FaCartPlus, FaRegHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
 import Cookies from "js-cookie";
 import { CartContext } from "@/context/CartContext";
 import { AuthContext } from "@/context/AuthContext";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { BsCartPlus, BsCartXFill } from "react-icons/bs";
 
 function Product({ id, name, category, price, image, quantity }: IPropsProduct) {
     const { favorites, handleFavorites } = useContext(FavoritesContext);
@@ -25,9 +26,18 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
     };
 
 
-    const addToCart = async (id: number, quantity: number) => {
+    const addToCart = async (id: number, baseQuantity: number) => {
         if (user) {
-            addCart(id, quantity)
+            if (Number(quantity) > 0) {
+                addCart(id, baseQuantity)
+            }
+            else {
+                Swal.fire({
+                    title: "There is not enough inventory !",
+                    icon: "error",
+                    draggable: true
+                });
+            }
         }
         else {
             Swal.fire({
@@ -64,7 +74,11 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
 
                     <span className="text-md cursor-pointer mr-5" onClick={() => addToCart(id, 1)}>
 
-                        <FaCartPlus className={`${isCart&&user ? "text-green-500" : "text-gray-500 "} text-2xl`} />
+                    {isCart&&user ? (
+                        <BsCartXFill className="text-green-500 text-2xl"  />
+                    ) : (
+                        <BsCartPlus className="text-gray-500  text-2xl" />
+                    )}
                     </span>
                     <span className="text-md cursor-pointer" onClick={() => handleFavorite(id)}>
                         {isFavorite ? (
