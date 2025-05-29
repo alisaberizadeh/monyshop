@@ -28,15 +28,22 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
 
     const addToCart = async (id: number, baseQuantity: number) => {
         if (user) {
-            if (Number(quantity) > 0) {
-                addCart(id, baseQuantity)
+
+            if (!isCart) {
+                if (Number(quantity) > 0) {
+                    addCart(id, baseQuantity)
+                }
+                else {
+                    Swal.fire({
+                        title: "There is not enough inventory !",
+                        icon: "error",
+                        draggable: true
+                    });
+                }
             }
             else {
-                Swal.fire({
-                    title: "There is not enough inventory !",
-                    icon: "error",
-                    draggable: true
-                });
+                addCart(id, baseQuantity)
+
             }
         }
         else {
@@ -74,11 +81,11 @@ function Product({ id, name, category, price, image, quantity }: IPropsProduct) 
 
                     <span className="text-md cursor-pointer mr-5" onClick={() => addToCart(id, 1)}>
 
-                    {isCart&&user ? (
-                        <BsCartXFill className="text-green-500 text-2xl"  />
-                    ) : (
-                        <BsCartPlus className="text-gray-500  text-2xl" />
-                    )}
+                        {isCart && user ? (
+                            <BsCartXFill className="text-green-500 text-2xl" />
+                        ) : (
+                            <BsCartPlus className="text-gray-500  text-2xl" />
+                        )}
                     </span>
                     <span className="text-md cursor-pointer" onClick={() => handleFavorite(id)}>
                         {isFavorite ? (

@@ -4,7 +4,7 @@ import Container from '@/components/container/Container';
 import { ICategury, IComment, IProduct } from '@/lib/types';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { BsCoin } from "react-icons/bs";
 import axios from 'axios';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -23,6 +23,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import Product from '@/components/product/Product';
 import Comment from '@/components/comment/Comment';
+import { CartContext } from '@/context/CartContext';
+import { AuthContext } from '@/context/AuthContext';
+import Swal from 'sweetalert2';
 
 
 function Page() {
@@ -38,6 +41,10 @@ function Page() {
     const { favorites, handleFavorites } = useContext(FavoritesContext);
     const isFavorite = favorites.includes(Number(id));
 
+    const { cart, addCart } = useContext(CartContext)
+    const { user } = useContext(AuthContext)
+    const isCart = cart.some(item => item.product_id === product?.id);
+    const router = useRouter();
 
     const handleDecrease = () => {
         if (value > 1) setValue(value - 1);
@@ -50,6 +57,8 @@ function Page() {
             }
         }
     };
+
+
 
     useEffect(() => {
         if (!id) return;
@@ -79,6 +88,45 @@ function Page() {
 
     const handleFavorite = (id: number) => {
         handleFavorites(id);
+    };
+
+    const addToCart = async (id: number, quantity: number) => {
+        if (user) {
+
+            if (!isCart) {
+                if (Number(product?.quantity) > 0) {
+                    addCart(id, quantity)
+                }
+                else {
+                    Swal.fire({
+                        title: "There is not enough inventory !",
+                        icon: "error",
+                        draggable: true
+                    });
+                }
+            }
+            else {
+                addCart(id, quantity)
+
+            }
+        }
+        else {
+            Swal.fire({
+                title: "First, log in to your account!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: 'Go to Login',
+                cancelButtonText: 'Cancel',
+                cancelButtonColor: "#cdcdcd",
+                confirmButtonColor: "#005aff",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.push("/auth/login");
+                }
+            });
+
+        }
+
     };
 
 
@@ -124,13 +172,15 @@ function Page() {
                                     Quantity : <span className='font-bold'>{product?.quantity}</span>
                                 </p>
 
-                                <div className="inline-flex items-center justify-between border border-gray-200 rounded-lg mt-4 py-2 dark:text-myTextDark bg-white dark:bg-bgDark2 dark:border-bgDark2">
-                                    <button onClick={handleDecrease} className="px-5 text-xl" > - </button>
-                                    <div className=''>
-                                        {value}
+                                {!isCart && (
+                                    <div className="inline-flex items-center justify-between border border-gray-200 rounded-lg mt-4 py-2 dark:text-myTextDark bg-white dark:bg-bgDark2 dark:border-bgDark2">
+                                        <button onClick={handleDecrease} className="px-5 text-xl" > - </button>
+                                        <div className=''>
+                                            {value}
+                                        </div>
+                                        <button onClick={handleIncrease} className="px-5 text-xl" > + </button>
                                     </div>
-                                    <button onClick={handleIncrease} className="px-5 text-xl" > + </button>
-                                </div>
+                                )}
 
                                 <p className='flex items-center mt-4 text-green-700'><BiSolidCheckShield className='mr-1' /> Guarantee of authenticity and physical health of the product</p>
 
@@ -145,13 +195,14 @@ function Page() {
                                         {isFavorite ? (<FaCheck className='text-2xl' />) : (<FaRegHeart className='text-2xl' />)}
                                     </button>
                                     <button
+                                        onClick={() => addToCart(product?.id, value)}
                                         type="button"
                                         className="flex items-center text-md text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 
         hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg
          dark:shadow-purple-800/80 font-medium rounded px-7 py-4 text-center me-2 mb-2"
                                     >
                                         <CiShoppingCart className='text-2xl mr-2' />
-                                        Add to Cart
+                                        {isCart ? ("Added.") : ("Add to Cart")}
                                     </button>
                                 </div>
                             </>
@@ -261,13 +312,13 @@ function Page() {
                             <div className='lg:w-1/2'>
 
                                 {comments?.map((item, i) => (
-                                        <Comment
-                                            key={i}
-                                            avatarUrl="https://cdn-icons-png.flaticon.com/512/3607/3607444.png"
-                                            comment={item.comment}
-                                            date={item.created_at.split("T")[0]}
-                                            name={item.user.name}
-                                        />
+                                    <Comment
+                                        key={i}
+                                        avatarUrl="https://cdn-icons-png.flaticon.com/512/3607/3607444.png"
+                                        comment={item.comment}
+                                        date={item.created_at.split("T")[0]}
+                                        name={item.user.name}
+                                    />
                                 ))}
 
                                 <div className='w-full'>

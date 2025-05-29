@@ -24,6 +24,7 @@ interface IdataUser {
 export const AuthContext = createContext({} as IAuth);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  
   const router = useRouter();
   const [user, setUser] = useState<IUser | null>(null);
 

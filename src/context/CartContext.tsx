@@ -36,7 +36,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                     },
                 });
                 setCart(res.data);
-                console.log(res.data);
 
 
             } catch (error) {

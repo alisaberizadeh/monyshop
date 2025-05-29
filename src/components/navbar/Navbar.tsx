@@ -86,7 +86,7 @@ function Navbar() {
                             <ci.CiShoppingCart />
                         </Link>
                         <Link
-                            href=""
+                            href="/favorites"
                             className="text-2xl relative text-myText dark:text-myTextDark bg-bgLight p-3 hover:bg-violet-600 hover:text-white dark:bg-bgDark2 dark:hover:bg-hoverBgDark2 rounded-full mx-2 transition-all ease-in-out duration-200  "
                         >
                             <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -left-1 dark:border-gray-900">{favorites.length}</div>
