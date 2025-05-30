@@ -1,5 +1,6 @@
 "use client"
 import Container from '@/components/container/Container';
+import { Skeleton } from '@/components/ui/skeleton';
 import { FavoritesContext } from '@/context/FavoritesContext';
 import { IProduct } from '@/lib/types';
 import axios from 'axios';
@@ -34,8 +35,7 @@ function Page() {
     fetchFavorites();
   }, [favorites]);
   
-  console.log(products);
-  
+   
 
   return (
     <Container>
@@ -45,7 +45,8 @@ function Page() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-10">
 
-          {products.map((item: IProduct, index: number) => (
+          {products.length > 1 ? (
+            products.map((item: IProduct, index: number) => (
             <div key={index} className="col-span-1 bg-white dark:bg-bgDark2 p-4 rounded-sm shadow-sm">
               <Link href={`/shop/${item.id}`} className="w-full relative group">
                 <img
@@ -65,7 +66,19 @@ function Page() {
               </p>
 
             </div>
-          ))}
+          ))
+          ) : (
+            Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="col-span-1 flex flex-col space-y-3">
+              <Skeleton className="h-[225px] w-full rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[250px]" />
+              </div>
+            </div>
+          ))
+          )}
 
         </div>
       </div>
