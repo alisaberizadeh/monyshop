@@ -26,7 +26,7 @@ function Shop() {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://alisab.ir/products");
+      const res = await axios.get("http://realalisaberi.ir/products");
       setProducts(res.data);
       setInitialProducts(res.data);
       setLoader(false);
@@ -37,7 +37,7 @@ function Shop() {
 
   const getCats = async () => {
     try {
-      const cat_res = await axios.get('http://alisab.ir/categories');
+      const cat_res = await axios.get('http://realalisaberi.ir/categories');
       setCats(cat_res.data);
     } catch (err) {
       console.error('Error:', err);
@@ -45,7 +45,7 @@ function Shop() {
   }
   const getCatProducts = async (id: number) => {
     try {
-      const cat_products = await axios.get(`http://alisab.ir/products/category/${id}`);
+      const cat_products = await axios.get(`http://realalisaberi.ir/products/category/${id}`);
       setProducts(cat_products.data);
       setInitialProducts(cat_products.data);
       setLoader(false);

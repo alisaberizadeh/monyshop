@@ -14,7 +14,7 @@ function Categories() {
 
         const getCategories = async () => {
             try {
-                const res = await fetch('http://alisab.ir/categories');
+                const res = await fetch('http://realalisaberi.ir/categories');
                 const data = await res.json();
                 setCats(data)
                 setLoader(false)

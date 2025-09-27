@@ -30,7 +30,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const token = Cookies.get('token');
         if (token) {
             try {
-                const res = await axios.get("http://alisab.ir/cart", {
+                const res = await axios.get("http://realalisaberi.ir/cart", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -67,7 +67,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                 });
 
                 if (result.isConfirmed) {
-                    const response = await fetch(`http://alisab.ir/products/${id}/return`, {
+                    const response = await fetch(`http://realalisaberi.ir/products/${id}/return`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -83,7 +83,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
             }
             else {
-                const response = await fetch(`http://alisab.ir/products/${id}/buy`, {
+                const response = await fetch(`http://realalisaberi.ir/products/${id}/buy`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

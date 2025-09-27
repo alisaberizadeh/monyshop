@@ -15,9 +15,23 @@ function MainLayout(props: { children: React.ReactNode }) {
 
   
   useEffect(() => {
-    axios.get("http://alisab.ir/sanctum/csrf-cookie", {
+    axios.get("http://realalisaberi.ir/sanctum/csrf-cookie", {
       withCredentials: true,
     });
+  }, []);
+  useEffect(() => {
+    const getCsrf = async () => {
+      try {
+        await fetch("http://realalisaberi.ir/sanctum/csrf-cookie", {
+          method: "GET",
+          credentials: "include", // خیلی مهم برای کوکی سشن
+        });
+      } catch (error) {
+        console.error("CSRF init error:", error);
+      }
+    };
+
+    getCsrf();
   }, []);
   return (
     <ThemeProvider>
