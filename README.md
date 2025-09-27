@@ -32,6 +32,7 @@
 - 🔍 Product filtering based on price and other attributes  
 - 🖼️ Product slider with **Swiper**  
 - 🔔 Notifications and alerts with **Toastify** and **SweetAlert2**
+- And ...
 
 ---
 
