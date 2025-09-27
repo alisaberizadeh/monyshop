@@ -20,7 +20,8 @@
 ---
 
 ## 🛍 Project Overview
-**Mony Shop** is a full-featured online store where users can browse, filter, and purchase all types of products.
+**Mony Shop** is a full-featured online store where users can browse, filter, and purchase all types of products.  
+The project supports **Dark & Light Mode** for better user experience.
 
 ---
 
@@ -31,11 +32,14 @@
 - 📂 Product categories  
 - 🔍 Product filtering based on price and other attributes  
 - 🖼️ Product slider with **Swiper**  
+- 🌗 Dark & Light Mode toggle  
 - 🔔 Notifications and alerts with **Toastify** and **SweetAlert2**
 - And ...
+
 
 ---
 
 ## 🛠 Technologies
 **Frontend:** Next.js, React, JavaScript, TypeScript, Tailwind CSS, Swiper, Axios, Toastify, SweetAlert2, Context API + LocalStorage  
 **Backend:** Laravel (PHP), MySQL  
+
