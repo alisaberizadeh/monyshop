@@ -38,17 +38,3 @@
 ## 🛠 Technologies
 **Frontend:** Next.js, React, JavaScript, TypeScript, Tailwind CSS, Swiper, Axios, Toastify, SweetAlert2, Context API + LocalStorage  
 **Backend:** Laravel (PHP), MySQL  
-
----
-
-## 💻 Installation & Running the Project
-
-### Backend (Laravel)
-```bash
-git clone <backend-repo-url>
-cd backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
