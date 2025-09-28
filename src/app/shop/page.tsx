@@ -1,5 +1,6 @@
-"use client";
-import React, { Suspense, useEffect, useState } from 'react';
+'use client';
+export const dynamic = 'force-dynamic';
+import React, { useEffect, useState } from 'react';
 import * as fa from "react-icons/fa6";
 import Link from 'next/link';
 import { ICat, IProduct } from '@/lib/types';
@@ -91,9 +92,7 @@ function Shop() {
 
 
   return (
-    
-        <Suspense fallback={<div>Loading...</div>}>
-<Container>
+    <Container>
       <div className='w-full my-10 grid grid-cols-4 gap-10 min-h-screen'>
         <div className='col-span-1'>
           <p className='dark:text-myTextDark text-center my-8 rounded-full font-sans text-2xl tracking-widest flex items-center justify-start'>
@@ -197,8 +196,6 @@ function Shop() {
         </div>
       </div>
     </Container>
-        </Suspense>
-    
   );
 }
 
