@@ -1,10 +1,9 @@
-import React from 'react'
-import ShopClient from './ShopClient'
+'use client';
+export const dynamic = 'force-dynamic';
+import dynamicImport from 'next/dynamic'; 
 
-function page() {
-  return (
-    <ShopClient/>
-  )
+const ShopClient = dynamicImport(() => import('./ShopClient'), { ssr: false });
+
+export default function ShopPage() {
+  return <ShopClient />;
 }
-
-export default page
