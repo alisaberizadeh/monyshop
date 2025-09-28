@@ -9,9 +9,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaAnglesRight, FaTrash } from 'react-icons/fa6';
 
 function Page() {
-  const favorites = localStorage.getItem("myFavorites");
   const [products, setProducts] = useState<IProduct[]>([]);
-  const {handleFavorites} = useContext(FavoritesContext)
+  const {handleFavorites , favorites} = useContext(FavoritesContext)
   const handleFavorite = (id: number) => {
     handleFavorites(id);
   };
@@ -19,7 +18,7 @@ function Page() {
     const fetchFavorites = async () => {
       if (!favorites) return;
 
-      const favoritesArray: number[] = JSON.parse(favorites);
+      const favoritesArray: number[] = favorites;
 
       try {
         const responses = await Promise.all(
@@ -45,7 +44,7 @@ function Page() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-10">
 
-          {products.length > 1 ? (
+          {products.length > 0 ? (
             products.map((item: IProduct, index: number) => (
             <div key={index} className="col-span-1 bg-white dark:bg-bgDark2 p-4 rounded-sm shadow-sm">
               <Link href={`/shop/${item.id}`} className="w-full relative group">
