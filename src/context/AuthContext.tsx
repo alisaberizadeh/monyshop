@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Sign up method
   const signUp = async (data: IdataUser) => {
     try {
-      const response = await axios.post("http://realalisaberi.ir/signup", {
+      const response = await axios.post("https://realalisaberi.ir/signup", {
         name: data.name,
         email: data.email,
         password: data.password,
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
 
-      const response = await axios.post("http://realalisaberi.ir/login", {
+      const response = await axios.post("https://realalisaberi.ir/login", {
         email: email,
         password: password,
       });

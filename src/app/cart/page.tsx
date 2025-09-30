@@ -21,7 +21,7 @@ function Page() {
 
             try {
                 const responses = await Promise.all(
-                    cart.map(item => axios.get(`http://realalisaberi.ir/products/show/${item.product_id}`))
+                    cart.map(item => axios.get(`https://realalisaberi.ir/products/show/${item.product_id}`))
                 );
                 const productsData = responses.map(res => res.data);
                 setProducts(productsData);
@@ -51,7 +51,7 @@ function Page() {
         const token = Cookies.get('token');
 
         try {
-            const res = await axios.get("http://realalisaberi.ir/cart/submit", {
+            const res = await axios.get("https://realalisaberi.ir/cart/submit", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

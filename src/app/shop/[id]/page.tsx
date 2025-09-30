@@ -65,16 +65,16 @@ function Page() {
 
         const getData = async () => {
             try {
-                const res = await axios.get(`http://realalisaberi.ir/products/show/${id}`);
+                const res = await axios.get(`https://realalisaberi.ir/products/show/${id}`);
                 setProduct(res.data);
 
-                const cat_res = await axios.get(`http://realalisaberi.ir/categories/${res.data.category_id}`);
+                const cat_res = await axios.get(`https://realalisaberi.ir/categories/${res.data.category_id}`);
                 setCat(cat_res.data);
 
-                const similar = await axios.get(`http://realalisaberi.ir/products/category/${res.data.category_id}`);
+                const similar = await axios.get(`https://realalisaberi.ir/products/category/${res.data.category_id}`);
                 setSimilarProducts(similar.data);
 
-                const comments_res = await axios.get(`http://realalisaberi.ir/products/show/${res.data.id}/comments`);
+                const comments_res = await axios.get(`https://realalisaberi.ir/products/show/${res.data.id}/comments`);
                 setComments(comments_res.data);
 
 

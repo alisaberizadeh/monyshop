@@ -13,7 +13,7 @@ function LatestProducts() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await fetch("http://realalisaberi.ir/products");
+        const res = await fetch("https://realalisaberi.ir/products");
         const data = await res.json();
         setProducts(data.slice(0, 10));
         setLoader(false);

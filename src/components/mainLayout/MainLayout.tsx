@@ -15,14 +15,14 @@ function MainLayout(props: { children: React.ReactNode }) {
 
   
   useEffect(() => {
-    axios.get("http://realalisaberi.ir/sanctum/csrf-cookie", {
+    axios.get("https://realalisaberi.ir/sanctum/csrf-cookie", {
       withCredentials: true,
     });
   }, []);
   useEffect(() => {
     const getCsrf = async () => {
       try {
-        await fetch("http://realalisaberi.ir/sanctum/csrf-cookie", {
+        await fetch("https://realalisaberi.ir/sanctum/csrf-cookie", {
           method: "GET",
           credentials: "include", // خیلی مهم برای کوکی سشن
         });

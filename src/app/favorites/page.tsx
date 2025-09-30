@@ -22,7 +22,7 @@ function Page() {
 
       try {
         const responses = await Promise.all(
-          favoritesArray.map(id => axios.get(`http://realalisaberi.ir/products/show/${id}`))
+          favoritesArray.map(id => axios.get(`https://realalisaberi.ir/products/show/${id}`))
         );
         const productsData = responses.map(res => res.data);
         setProducts(productsData);
